@@ -1,0 +1,10 @@
+# Code owners for almanac-data/climate-almanac
+#
+# Until per-vertical stewards are recruited, the engine caretaker reviews all
+# changes so every contributor PR auto-requests a reviewer.
+#
+# As stewards come on board, replace the catch-all with scoped ownership, e.g.:
+#   /catalog/   @almanac-data/climate-stewards
+#   /schema/    @rudi193-cmd
+
+*   @rudi193-cmd
