@@ -26,9 +26,26 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Detect headless mode
+        id: cfg
+        # Single source of truth: check_links.py reads reachability.headless too,
+        # so we only need to decide here whether to install the browser.
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import pathlib, yaml
+          cfg = yaml.safe_load(pathlib.Path("almanac.config.yml").read_text()) or {}
+          on = bool((cfg.get("reachability") or {}).get("headless", False))
+          print("headless=" + ("true" if on else "false"))
+          PY
+      - name: Install headless browser
+        if: steps.cfg.outputs.headless == 'true'
+        run: |
+          pip install -r requirements-headless.txt
+          playwright install --with-deps chromium
       - name: Probe canonical URLs
         # check_links.py exits non-zero when an entry is unreachable; tee keeps the
         # step green so the alert step below always runs on the captured report.
+        # Headless self-enables from reachability.headless in almanac.config.yml.
         run: python scripts/check_links.py --json | tee link-check-report.json
       - name: Open or refresh dead-link alerts
         if: always()

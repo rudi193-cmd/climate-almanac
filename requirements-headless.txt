@@ -1,0 +1,11 @@
+# Optional dependencies for the headless-browser reachability fallback.
+#
+# Only needed by a vertical that sets `reachability.headless: true` in
+# almanac.config.yml (typically those cataloging CDN-bot-protected federal
+# sources: BLS, Census, Congress.gov, SEC, GAO). The base engine works without
+# this — check_links.py degrades gracefully if Playwright is absent.
+#
+# Install:
+#   pip install -r requirements-headless.txt
+#   playwright install --with-deps chromium
+playwright>=1.40
