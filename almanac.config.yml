@@ -1,0 +1,9 @@
+
+# ---------------------------------------------------------------------------
+# Reachability monitoring (added by headless-fallback propagation).
+# ---------------------------------------------------------------------------
+reachability:
+  # Verify CDN-bot-blocked federal sources (Census, Congress.gov, GAO, ...) with
+  # a real headless Chromium. Requires Playwright (requirements-headless.txt); CI
+  # installs the browser only when this is true.
+  headless: false
